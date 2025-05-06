@@ -8,21 +8,21 @@ Desarrollar una aplicación de consola en Python que permita:
 """
 import pandas as pd
 
-pago_cuentas = {
-    "AGUAS ALTIPLANO": 90,
-    "AGUAS ARAUCANIA": 183,
-    "AGUAS MAGALLANES": 17,
-    "BELCORP ESIK/LB": 84,
-    "CLARO": 264,
-    "DIRECTV MENSUAL": 236,
-    "ENTEL PCS": 2586,
-    "FONASA": 873,
-    "EF SECURITIZADORA SA": 72,
-    "MOVISTAR": 3547,
-    "MUNDO PACIFICO": 432,
-    "VTR": 779,
-    "WOM": 2795
-}
+pago_cuentas = [
+    {'nombre': 'AGUAS ALTIPLANO', 'valor': 90},
+    {'nombre': 'AGUAS ARAUCANIA', 'valor': 183},
+    {'nombre': 'AGUAS MAGALLANES', 'valor': 17},
+    {'nombre': 'BELCORP ESIK/LB', 'valor': 84},
+    {'nombre': 'CLARO', 'valor': 264},
+    {'nombre': 'DIRECTV MENSUAL', 'valor': 236},
+    {'nombre': 'ENTEL PCS', 'valor': 2586},
+    {'nombre': 'FONASA', 'valor': 873},
+    {'nombre': 'EF SECURITIZADORA SA', 'valor': 72},
+    {'nombre': 'MOVISTAR', 'valor': 3547},
+    {'nombre': 'MUNDO PACIFICO', 'valor': 432},
+    {'nombre': 'VTR', 'valor': 779},
+    {'nombre': 'WOM', 'valor': 2795}
+]
 
 def agregar_producto():
     try:
