@@ -1,0 +1,27 @@
+#crear el repo#
+
+git init
+git add .
+git commit -m "Primer Comit"
+
+git remote add origin https://github.com/DarkSith80/busqueda_segura.git
+git branch -M main
+git push -u origin main
+
+
+
+-----------------------------
+#clona desde cualquier PC
+
+git clone https://github.com/DarkSith80/busqueda_segura.git
+
+----------------------------
+
+# Actualiza el repo#
+git add .
+git commit -m "Primer Comit"
+git push
+
+-----------------------------
+# actualizar el clonado#
+git pull
