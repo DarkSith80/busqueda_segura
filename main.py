@@ -19,12 +19,12 @@ pago_cuentas = [
 ]
 
 
-def agregar_producto():
+def agregar_cuenta():
     try:
         print("Agregar Cuenta")
-        cuenta = input("Ingrese la Cuenta: \n")
+        nombre = input("Ingrese la Cuenta: \n").strip()
         valor = float(input("Ingrese el precio: \n"))
-        pago_cuentas.append({"producto": cuenta, "precio": valor})
+        pago_cuentas.append({"nombre": nombre, "valor": valor})
         print("la cuenta fue agregada exitosamente. \n")
     except ValueError:
         print("Favor ingrese una cuenta válida")
@@ -53,10 +53,10 @@ def quick_sort(lista):
     # Elegimos el primer elemento como "pivote"
     pivote = lista[0]
 
-    # Lista de productos cuyo nombre es menor (en orden alfabético) al pivote
+    # Lista de cuentas cuyo nombre es menor (en orden alfabético) al pivote
     menores = [x for x in lista[1:] if x ["nombre"].lower() < pivote["nombre"].lower()]
 
-    # Lista de productos cuyo nombre es mayor o igual al pivote
+    # Lista de cuentas cuyo nombre es mayor o igual al pivote
     mayores = [x for x in lista[1:] if x["nombre"].lower() >= pivote["nombre"].lower()]
     
     # Llamamos recursivamente a quick_sort para ordenar 'menores' y 'mayores', y concatenamos todo
@@ -77,7 +77,7 @@ def busqueda_binaria(lista, objetivo):
 
         # Comparamos el nombre del medio con el objetivo
         if nombre_medio == objetivo.lower():
-            return lista[medio]  # Si es igual, encontramos el producto
+            return lista[medio]  # Si es igual, encontramos el cuenta
         elif objetivo.lower() < nombre_medio:
             # Si el objetivo es menor, seguimos buscando en la mitad izquierda
             derecha = medio - 1
@@ -85,19 +85,19 @@ def busqueda_binaria(lista, objetivo):
             # Si el objetivo es mayor, seguimos buscando en la mitad derecha
             izquierda = medio + 1
 
-    # Si no encontramos el producto, devolvemos None
+    # Si no encontramos el cuenta, devolvemos None
     return None
 
-def buscar_producto():
-    print("\n=== BUSCAR PRODUCTO ===")
-    producto = input("Ingrese el nombre de la cuenta a buscar: \n").strip()
+def buscar_cuenta():
+    print("\n=== BUSCAR cuenta ===")
+    cuenta = input("Ingrese el nombre de la cuenta a buscar: \n").strip().lower()
     
-    if not producto:  # Validar que no esté vacío
-        print("\nError: Debe ingresar un nombre de la cuenta a buscar.\n").strip()
+    if not cuenta:  # Validar que no esté vacío
+        print("\nError: Debe ingresar un nombre de la cuenta a buscar.\n").strip().lower()
         return
     
     try:
-        resultado = busqueda_binaria(pago_cuentas, producto)
+        resultado = busqueda_binaria(pago_cuentas, cuenta)
         print(f"Nombre: {resultado['nombre']}")
         print(f"Valor: ${resultado['valor']:,}\n")
     except ValueError as e:
@@ -130,15 +130,15 @@ print("=========================")
 while True:
     opcion= int(input('Ingrese una opcion:\n'))
     if opcion == 1:
-         agregar_producto()
+         agregar_cuenta()
     elif opcion == 2:
         print('Los pagos son los siguientes: \n')
         mostrar_datos()
     elif opcion == 3:
          eliminar_pago()
     elif opcion == 4:
-        buscar_producto()
-    elif opcion == 4:
+        buscar_cuenta()
+    elif opcion == 5:
          print("Saliendo del programa")
          break
     else:
