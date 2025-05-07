@@ -1,12 +1,12 @@
 
-import pandas as pd
+#import pandas as pd
 
 # donde esta el problema de este ejercicio?
 pago_cuentas = [
     {'nombre': 'AGUAS ALTIPLANO', 'valor': 90},
     {'nombre': 'AGUAS ARAUCANIA', 'valor': 183},
     {'nombre': 'AGUAS MAGALLANES', 'valor': 17},
-    {'nombre': 'BELCORP ESIK/LB', 'valor': 84},
+    {'nombre': 'BELCORP', 'valor': 84},
     {'nombre': 'CLARO', 'valor': 264},
     {'nombre': 'DIRECTV MENSUAL', 'valor': 236},
     {'nombre': 'ENTEL PCS', 'valor': 2586},
@@ -21,27 +21,27 @@ pago_cuentas = [
 
 def agregar_producto():
     try:
-        print("Agregar Producto")
-        cuenta = input("Ingrese el producto: \n")
+        print("Agregar Cuenta")
+        cuenta = input("Ingrese la Cuenta: \n")
         valor = float(input("Ingrese el precio: \n"))
         pago_cuentas.append({"producto": cuenta, "precio": valor})
         print("la cuenta fue agregada exitosamente. \n")
     except ValueError:
-        print("Favor ingrese un producto válido.")
+        print("Favor ingrese una cuenta válida")
 
 
 
 def eliminar_pago():
     try:
-        cuenta = input("Ingrese el producto a eliminar: \n").lower()
+        cuenta = input("Ingrese la cuenta que desea eliminar: \n").lower()
         for item in pago_cuentas[:]:  # iterate over a copy of the list
             if item["nombre"].lower() == cuenta:  # assuming the product name is in the "nombre" key
                 pago_cuentas.remove(item)
                 print("la cuenta fue eliminada exitosamente \n")
                 return
-        print("Producto no encontrado.")
+        print("cuenta no encontrado.")
     except ValueError:
-        print("Favor ingrese un producto válido.")
+        print("Favor ingrese una cuenta válida")
 
 
 
@@ -88,6 +88,34 @@ def busqueda_binaria(lista, objetivo):
     # Si no encontramos el producto, devolvemos None
     return None
 
+def buscar_producto():
+    print("\n=== BUSCAR PRODUCTO ===")
+    producto = input("Ingrese el nombre de la cuenta a buscar: \n").strip()
+    
+    if not producto:  # Validar que no esté vacío
+        print("\nError: Debe ingresar un nombre de la cuenta a buscar.\n").strip()
+        return
+    
+    try:
+        resultado = busqueda_binaria(pago_cuentas, producto)
+        print(f"Nombre: {resultado['nombre']}")
+        print(f"Valor: ${resultado['valor']:,}\n")
+    except ValueError as e:
+        print(f"\nError: {e}\n")
+
+
+
+def mostrar_datos():
+    pago_cuentas_ordenado = sorted(pago_cuentas, key=lambda x: x['nombre'])     # Ordenar por nombre
+
+# Calcular el ancho máximo para la columna nombre
+    max_nombre = max(len(item['nombre']) for item in pago_cuentas_ordenado)
+
+# Imprimir encabezado
+    print(f"{'Nombre':<{max_nombre}} | {'Valor':>10}")
+    print("-" * (max_nombre + 13))  # Línea separadoracon ancho máximo
+    for item in pago_cuentas_ordenado:
+        print(f"{item['nombre']:<{max_nombre}} | {item['valor']:>10,}") #<-- Imprimir cada fila
 
 
 print("=========================")
@@ -96,16 +124,20 @@ print("=========================")
 print("1. Agregar Pagos")
 print("2. Revisar Pagos")
 print("3. Eliminar Pagos")
-print("4. Salir")
+print("4. Buscar una Cuenta")
+print("5. Salir")
 print("=========================")
 while True:
     opcion= int(input('Ingrese una opcion:\n'))
     if opcion == 1:
          agregar_producto()
     elif opcion == 2:
-         pass
+        print('Los pagos son los siguientes: \n')
+        mostrar_datos()
     elif opcion == 3:
          eliminar_pago()
+    elif opcion == 4:
+        buscar_producto()
     elif opcion == 4:
          print("Saliendo del programa")
          break
