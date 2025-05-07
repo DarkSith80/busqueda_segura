@@ -1,13 +1,7 @@
-"""
-Objetivo:
-Desarrollar una aplicación de consola en Python que permita:
-• Agregar productos a un inventario.
-• Ordenar los pago_cuentas alfabéticamente y por precio.
-• Buscar productos por tipo.
-• Validar correctamente la entrada del usuario para proteger la aplicación.
-"""
+
 import pandas as pd
 
+# donde esta el problema de este ejercicio?
 pago_cuentas = [
     {'nombre': 'AGUAS ALTIPLANO', 'valor': 90},
     {'nombre': 'AGUAS ARAUCANIA', 'valor': 183},
@@ -24,72 +18,100 @@ pago_cuentas = [
     {'nombre': 'WOM', 'valor': 2795}
 ]
 
+
 def agregar_producto():
     try:
         print("Agregar Producto")
-        cuenta = input("Ingrese el producto: ")
-        valor = float(input("Ingrese el precio: "))
+        cuenta = input("Ingrese el producto: \n")
+        valor = float(input("Ingrese el precio: \n"))
         pago_cuentas.append({"producto": cuenta, "precio": valor})
-        print("la cuenta fue agregada exitosamente.")
+        print("la cuenta fue agregada exitosamente. \n")
     except ValueError:
         print("Favor ingrese un producto válido.")
 
-def ordenar_lista():
-    if not pago_cuentas:
-        print('la lista esta vacia.') # <-- si la lista está vacía, no se puede ordenar
-    return sorted(pago_cuentas.items(), key=lambda x: x[0].lower()) # <-- ordenar por clave (nombre)
 
 
-def busqueda_binaria(lista, nombre_buscado):
-    izquierda = 0 # <-- índice inicial
-    derecha = len(lista) - 1 # <-- índice final
-
-    while izquierda <= derecha: # <-- mientras haya elementos en la lista
-        medio = (izquierda + derecha) // 2 # <-- índice medio
-        nombre_actual = lista[medio][0].lower() # <-- nombre del producto en la posición media
-
-        if nombre_actual == nombre_buscado.lower(): # <-- si el nombre actual es igual al buscado
-            return lista[medio]
-        elif nombre_actual < nombre_buscado.lower(): # <-- si el nombre actual es menor que el buscado
-            izquierda = medio + 1 # <-- el índice inicial se actualiza
-        else:
-            derecha = medio - 1 # <-- el índice final se actualiza
-
-    return None # <--si no se encuentra el producto, se devuelve
-
-def borrar_pago_cuenta():
-    print('Borrar Cuenta')
-    cuenta = input('Ingrese la cuenta que sea borrar:\n')
-
-
-
-df = pd.DataFrame(pago_cuentas)  # <-- se convierte el diccionario en un DataFrame
-print(df)
-
-
-
-def ordenar_alfabeticamente():
-    df.sort_values(by='producto', inplace=True) # <-- ordena el DataFrame por el campo 'producto'
-    print(df)
-
-'''
-print("=============================")
-print("         Menu                ")
-print("=============================")
-print("Bienvenido a la aplicación de gestión de cuentas")
-print("1. Agregar una Cuenta")
-print("2. Borrar una Cuenta")
-print("3. Buscar una Cuenta")
-print("4. Salir")
-while True:
+def eliminar_pago():
     try:
-        opcion = int(input("Ingrese una Opcion:\n"))
-        if opcion == 1:
-            agregar_producto()
-        elif opcion == 2:
-            pass
-'''
+        cuenta = input("Ingrese el producto a eliminar: \n").lower()
+        for item in pago_cuentas[:]:  # iterate over a copy of the list
+            if item["nombre"].lower() == cuenta:  # assuming the product name is in the "nombre" key
+                pago_cuentas.remove(item)
+                print("la cuenta fue eliminada exitosamente \n")
+                return
+        print("Producto no encontrado.")
+    except ValueError:
+        print("Favor ingrese un producto válido.")
 
 
 
+def quick_sort(lista):
+    # Caso base: si la lista tiene 0 o 1 elementos, ya está ordenada
+    if len(lista) <= 1:
+        return lista
+
+    # Elegimos el primer elemento como "pivote"
+    pivote = lista[0]
+
+    # Lista de productos cuyo nombre es menor (en orden alfabético) al pivote
+    menores = [x for x in lista[1:] if x ["nombre"].lower() < pivote["nombre"].lower()]
+
+    # Lista de productos cuyo nombre es mayor o igual al pivote
+    mayores = [x for x in lista[1:] if x["nombre"].lower() >= pivote["nombre"].lower()]
+    
+    # Llamamos recursivamente a quick_sort para ordenar 'menores' y 'mayores', y concatenamos todo
+    return quick_sort(menores) + [pivote] + quick_sort(mayores)
+
+
+
+
+def busqueda_binaria(lista, objetivo):
+    # Definimos los extremos de la búsqueda
+    izquierda, derecha = 0, len(lista) - 1
+
+    # Mientras haya elementos en el rango a revisar
+    while izquierda <= derecha:
+        # Calculamos la posición del elemento medio
+        medio = (izquierda + derecha) // 2
+        nombre_medio = lista[medio]["nombre"].lower()
+
+        # Comparamos el nombre del medio con el objetivo
+        if nombre_medio == objetivo.lower():
+            return lista[medio]  # Si es igual, encontramos el producto
+        elif objetivo.lower() < nombre_medio:
+            # Si el objetivo es menor, seguimos buscando en la mitad izquierda
+            derecha = medio - 1
+        else:
+            # Si el objetivo es mayor, seguimos buscando en la mitad derecha
+            izquierda = medio + 1
+
+    # Si no encontramos el producto, devolvemos None
+    return None
+
+
+
+print("=========================")
+print("           Menu          ")
+print("=========================")
+print("1. Agregar Pagos")
+print("2. Revisar Pagos")
+print("3. Eliminar Pagos")
+print("4. Salir")
+print("=========================")
+while True:
+    opcion= int(input('Ingrese una opcion:\n'))
+    if opcion == 1:
+         agregar_producto()
+    elif opcion == 2:
+         pass
+    elif opcion == 3:
+         eliminar_pago()
+    elif opcion == 4:
+         print("Saliendo del programa")
+         break
+    else:
+         print("Opcion no valida")
+
+#print(pago_cuentas)
+#pago_cuentas = pd.DataFrame(pago_cuentas)
 
